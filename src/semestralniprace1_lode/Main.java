@@ -31,6 +31,10 @@
  * v nouzi se to muze vykreslovat do sout, ale opravdu jen v nouzi, protoze se mi
  * to nelibi :D
  * 
+ * pokusit se o co nejvíce objektový přístup (viz.: zalozoky)
+ * 
+ * 
+ * 
  * 
  * 
  * 
