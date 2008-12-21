@@ -9,7 +9,7 @@
  * 
  * termin odevzdani: 31.1.2009
  * vybrane tema: hra Lode
- * pozadavky: prace se souborem
+ * pozadavky: oop, prace se souborem
  * 
  * myslenkovy rozbor:
  * 
@@ -32,12 +32,16 @@
  * to nelibi :D
  * 
  * pokusit se o co nejvíce objektový přístup (viz.: zalozoky)
- * 
- * 
- * 
- * 
- * 
- * 
+ *
+ *
+ * menu viz obr. predloha, ale struktura:
+ *      Nova Hra
+ *          > hrat s PC
+ *              > zadani svych lodi
+ *                  > volba tahu v graf. rezimu klikanim na policko
+ *      Nejrychlejsi cas
+ *          > zobrazeni nejrychlejsi vyhry, ukladani do registru ci normalniho souboru....
+ *      Konec Hry
  * 
  * 
  */
@@ -49,7 +53,12 @@ public class Main {
 
         public static void main(String[] args) {
             
-            
+            int pocet_lodi = 10;
+
+            HraciPole PolePocitac = new HraciPole(true, 10, 10, pocet_lodi);
+            HraciPole PoleHrac = new HraciPole(false, 10, 10, pocet_lodi);
+
+            System.out.println("debug, nahodne:\n\nPole Pocitac:\n\n" + PolePocitac + "\nPole Hrac:\n\n" + PoleHrac);
             
     }
 

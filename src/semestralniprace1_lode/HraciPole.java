@@ -8,7 +8,7 @@ public class HraciPole {
     Policko[] obsah;    
 
     public HraciPole(){
-        this(false, 20, 20, 10);
+        this(true, 10, 10, 10);
     }
     public HraciPole(Boolean nahodne, int sirka_, int vyska_, int pocet_lodi_){
 
@@ -18,7 +18,7 @@ public class HraciPole {
 
         obsah = new Policko[sirka*vyska];
 
-        for (int i = 0; i < obsah.length; i++) {
+        for (int i = 0; i < obsah.length; i++) {    // vytvoreni odkazu v poli objektu
             obsah[i] = new Policko();
         }
 
@@ -27,20 +27,39 @@ public class HraciPole {
                 obsah[i].NastavPrazdne();
             }
         }
-        else {
-            for (int i = 0; i < obsah.length; i++) {
-                obsah[i].NastavNahodne();
+        else { // nahodne umisteni lodi, prevence opakovani
+            int[] nahodne_pozice = new int[pocet_lodi];
 
+            for (int i = 0; i < pocet_lodi; i++) {
+                nahodne_pozice[i] = (int)Math.round(Math.random()*(obsah.length-1));
+                
+                for (int j = 0; j < i; j++) { // prevence opakovani - zabraneni snizeni poctu lodi
+                    while(nahodne_pozice[i]==nahodne_pozice[j]){
+                        nahodne_pozice[i] = (int)Math.round(Math.random()*(obsah.length-1));
+                    }
+                }
+                obsah[nahodne_pozice[i]].NastavObsazene();
             }
         }
 
     }
 
-    @Override
+
+
     public String toString(){
         String retezec = new String();
         int k = 0;
+
+        retezec += "    ";
+
+        for (int i = 0; i < sirka; i++) {
+            retezec += " " + (i+1);
+        }
+
+        retezec += "\n\n";
+
         for (int i = 0; i < vyska; i++) {
+            retezec += " " + (i+1) + "  ";
             for (int j = 0; j < sirka; j++) {
                 retezec += " ";
                 retezec += obsah[k].VypisObsah();
@@ -53,13 +72,13 @@ public class HraciPole {
     }
 
     boolean Strelba(int index_policka){
-        boolean vysledek;
+        boolean zasah;
 
-        vysledek = obsah[index_policka].Strelba();
+        zasah = obsah[index_policka].Strelba();
 
-        if (vysledek) pocet_lodi--;
+        if (zasah) pocet_lodi--;
 
-        return vysledek;
+        return zasah;
     }
 
     byte StavPolicka(int index_policka){
