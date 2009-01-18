@@ -1,27 +1,38 @@
-/*
- * hlavniokno.java
- *
- * Created on 12. listopad 2008, 15:24
- */
 
 package semestralniprace1_lode;
 
 import java.awt.*;
 import javax.swing.*;
+import java.applet.*;
 
 public class hlavniokno extends javax.swing.JFrame {
-
+    /**
+     * Image objekty obrazku, se kterymi pracuje okno
+     */
     Image img_dira, img_hratspc, img_hratskamosem, img_konechry, img_lod,
           img_napislode, img_novahra, img_pozadiocean, img_prohraljsi,
           img_zviteziljsi, img_otaznik;
-    Hra hra_clovek, hra_pocitac;
+    AudioClip zvuk_pozadi;
+    /**
+     * Demo hra pri spusteni programu
+     */
+    Hra hra_demo;
 
- 
+    Hra hra_pocitac, hra_clovek;
+    Hra hra_pocitac_stinova, hra_clovek_stinova;
+
+    JBHraciPole hracipole_demo;
+
+    JBHraciPole hracipole_pocitac, hracipole_clovek;
+
+    Mrizka mrizka;
+    ImagePanel hraciplocha_pozadi;
 
     /** Creates new form hlavniokno */
     public hlavniokno() {
         initComponents();
 
+        // nacteni obrazku se souboru
         img_pozadiocean = new ImageIcon(getClass().getResource("/grafika/pozadi-ocean.jpg")).getImage();
         img_dira = new ImageIcon(getClass().getResource("/grafika/dira.gif")).getImage();                
         img_hratspc = new ImageIcon(getClass().getResource("/grafika/hrat s PC.gif")).getImage();                
@@ -34,15 +45,20 @@ public class hlavniokno extends javax.swing.JFrame {
         img_zviteziljsi = new ImageIcon(getClass().getResource("/grafika/zviteziljsi.jpg")).getImage();
         img_otaznik = new ImageIcon(getClass().getResource("/grafika/otaznik.gif")).getImage();
 
-        ImagePanel hraciplocha_pozadi = new ImagePanel(img_pozadiocean);
+        // nacteni a spusteni zvuku na pozadi
+        zvuk_pozadi = Applet.newAudioClip(getClass().getResource("/zvuk/sea.wav"));
+        zvuk_pozadi.loop();
+
+        // pozadi hraci plochy
+        hraciplocha_pozadi = new ImagePanel(img_pozadiocean);
         jPanel1.add(hraciplocha_pozadi);
         jPanel1.setComponentZOrder(hraciplocha_pozadi, 5);
 
         hraciplocha_pozadi.setLocation(jPanel1.getWidth()/2-img_pozadiocean.getWidth(null)/2+1, jLabel1.getHeight()+jLabel1.getY()*2+5);
         hraciplocha_pozadi.setSize(img_pozadiocean.getWidth(null), img_pozadiocean.getHeight(null));
         
-
-        Mrizka mrizka = new Mrizka();
+        // mrizka - policka hraci plochy
+        mrizka = new Mrizka();
         jPanel1.add(mrizka);
         jPanel1.setComponentZOrder(mrizka, 4);
 
@@ -50,18 +66,15 @@ public class hlavniokno extends javax.swing.JFrame {
         mrizka.setSize(hraciplocha_pozadi.getWidth()-10, hraciplocha_pozadi.getHeight()-10);
         mrizka.setForeground(new Color(200,200,200));
 
-        hra_clovek = new Hra(99);
+        // vytvoreni hry pro uvodni obrazovku
+        hra_demo = new Hra(99);
 
-        JBHraciPole jbHraciPole_clovek = new JBHraciPole(hra_clovek, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
-        jPanel1.add(jbHraciPole_clovek);
-        jPanel1.setComponentZOrder(jbHraciPole_clovek, 3);
+        // vykreslovaci a odchytavaci cast hraci plochy, jako tlacitko
+        hracipole_demo = new JBHraciPole(hra_demo, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
+        jPanel1.add(hracipole_demo);
+        jPanel1.setComponentZOrder(hracipole_demo, 3);
 
-        jbHraciPole_clovek.setLocation(mrizka.getX()+5, mrizka.getY()+5);        
-        
-
-
-        
-
+        hracipole_demo.setLocation(mrizka.getX()+5, mrizka.getY()+5);
 
     }
 
@@ -100,6 +113,9 @@ public class hlavniokno extends javax.swing.JFrame {
         jButton_novahra.setDoubleBuffered(true);
         jButton_novahra.setFocusPainted(false);
         jButton_novahra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_novahra_klik(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 zmenaOkraje(evt);
             }
@@ -222,7 +238,9 @@ public class hlavniokno extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Zmena border objektu JButton na bilou barvu
+     */
     private void zmenaOkraje(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zmenaOkraje
         javax.swing.JButton tlacitko = new javax.swing.JButton();
 
@@ -230,7 +248,10 @@ public class hlavniokno extends javax.swing.JFrame {
 
         tlacitko.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
     }//GEN-LAST:event_zmenaOkraje
-
+    /**
+     *
+     * Zmena border objektu JButton na cernou barvu
+     */
     private void zmenaOkrajeZpet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zmenaOkrajeZpet
         javax.swing.JButton tlacitko = new javax.swing.JButton();
 
@@ -238,10 +259,44 @@ public class hlavniokno extends javax.swing.JFrame {
 
         tlacitko.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(20, 20, 20), 1, true));
     }//GEN-LAST:event_zmenaOkrajeZpet
-
+    /**
+     *
+     * Obsluha udalosti stisknuti tlacitka Konec hry
+     */
     private void jButton_konechry_klik(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_konechry_klik
         System.exit(0);
     }//GEN-LAST:event_jButton_konechry_klik
+
+    private void jButton_novahra_klik(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_novahra_klik
+        /**
+         *
+         *
+        // vykreslovaci a odchytavaci cast hraci plochy, jako tlacitko
+        JBHraciPole hracipole_demo = new JBHraciPole(hra_demo, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
+        jPanel1.add(hracipole_demo);
+        jPanel1.setComponentZOrder(hracipole_demo, 3);
+
+        hracipole_demo.setLocation(mrizka.getX()+5, mrizka.getY()+5);
+         *
+         */
+
+        hra_pocitac = new Hra(1);
+        hra_pocitac.Vypis();
+        hra_pocitac_stinova = new Hra(hra_pocitac);
+
+        if (hracipole_demo.isValid()) jPanel1.remove(hracipole_demo);
+
+        hracipole_pocitac = new JBHraciPole(hra_pocitac_stinova, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
+        jPanel1.add(hracipole_pocitac);
+        jPanel1.setComponentZOrder(hracipole_pocitac, 3);
+
+        hracipole_pocitac.setLocation(mrizka.getX()+5, mrizka.getY()+5);
+
+        JButton tlacitko = (JButton)evt.getSource();
+
+        tlacitko.setEnabled(false);
+
+    }//GEN-LAST:event_jButton_novahra_klik
 
     /**
     * @param args the command line arguments

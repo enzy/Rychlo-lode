@@ -8,7 +8,7 @@ public class HraciPole {
     Policko[] obsah;    
 
     public HraciPole(){
-        this(true, 10, 10, 10);
+        this(true, 7, 7, 10);
     }
     public HraciPole(Boolean chaotickyrezim, int sirkavyska){
         if (chaotickyrezim){
@@ -106,6 +106,8 @@ public class HraciPole {
         zasah = obsah[index_policka].Strelba();
 
         if (zasah) pocet_lodi--;
+
+        if (zasah) System.out.println("Zasah " + index_policka);
 
         return zasah;
     }

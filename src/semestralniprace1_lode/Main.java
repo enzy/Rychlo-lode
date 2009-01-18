@@ -50,14 +50,16 @@ package semestralniprace1_lode;
 
 public class Main {
 
+    @SuppressWarnings("static-access")
         public static void main(String[] args) {
-            
-            int pocet_lodi = 10;
 
-            HraciPole PolePocitac = new HraciPole(true, 10, 10, pocet_lodi);
-            HraciPole PoleHrac = new HraciPole(false, 10, 10, pocet_lodi);
+            System.out.println("Vytvarim okno...");
 
-            System.out.println("debug, nahodne:\n\nPole Pocitac:\n\n" + PolePocitac + "\nPole Hrac:\n\n" + PoleHrac);
+            hlavniokno obrazovka = new hlavniokno();
+
+            System.out.println("Zobrazuji okno...\n");
+
+            obrazovka.main(args);           
             
     }
 
