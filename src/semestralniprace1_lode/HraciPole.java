@@ -10,6 +10,34 @@ public class HraciPole {
     public HraciPole(){
         this(true, 10, 10, 10);
     }
+    public HraciPole(Boolean chaotickyrezim, int sirkavyska){
+        if (chaotickyrezim){
+
+            sirka = sirkavyska;
+            vyska = sirkavyska;
+            pocet_lodi = 10;
+            int nahodne;
+
+            obsah = new Policko[sirka*vyska];
+
+            for (int i = 0; i < obsah.length; i++) {    // vytvoreni odkazu v poli objektu
+                obsah[i] = new Policko();
+
+                nahodne = (int)Math.round(Math.random()*2);
+
+                switch(nahodne){
+                    case 0:
+                        obsah[i].NastavObsazene();
+                        break;
+                    case 1:
+                        obsah[i].NastavPotopene();
+                        break;
+                    case 2:
+                        obsah[i].NastavPrazdne();
+                }
+            }
+        }
+    }
     public HraciPole(Boolean nahodne, int sirka_, int vyska_, int pocet_lodi_){
 
         sirka = sirka_;
@@ -46,6 +74,7 @@ public class HraciPole {
 
 
 
+    @Override
     public String toString(){
         String retezec = new String();
         int k = 0;

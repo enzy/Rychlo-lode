@@ -47,7 +47,6 @@
  */
 
 package semestralniprace1_lode;
-import java.util.*;
 
 public class Main {
 

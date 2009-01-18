@@ -3,7 +3,7 @@ package semestralniprace1_lode;
 
 public class Policko{
 
-    byte stav = 0;    // 0 - prazdne, 1 - obsazene, 2 - potopene, 3 - voda/vyzkousene
+    byte stav = 0;    // 0 - prazdne=neobjevene, 1 - obsazene, 2 - potopene, 3 - voda/vyzkousene
 
     void NastavPrazdne(){
         stav = 0;

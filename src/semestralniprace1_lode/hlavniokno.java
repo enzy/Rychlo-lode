@@ -6,16 +6,70 @@
 
 package semestralniprace1_lode;
 
+import java.awt.*;
+import javax.swing.*;
+
 /**
  *
  * @author  Enzy
  */
 public class hlavniokno extends javax.swing.JFrame {
 
+    Image img_dira, img_hratspc, img_hratskamosem, img_konechry, img_lod,
+          img_napislode, img_novahra, img_pozadiocean, img_prohraljsi,
+          img_zviteziljsi, img_otaznik;
+    Hra hra_clovek, hra_pocitac;
+
+ 
+
     /** Creates new form hlavniokno */
     public hlavniokno() {
         initComponents();
+
+        img_pozadiocean = new ImageIcon(getClass().getResource("/grafika/pozadi-ocean.jpg")).getImage();
+        img_dira = new ImageIcon(getClass().getResource("/grafika/dira.gif")).getImage();                
+        img_hratspc = new ImageIcon(getClass().getResource("/grafika/hrat s PC.gif")).getImage();                
+        img_hratskamosem = new ImageIcon(getClass().getResource("/grafika/hrat s kamosem.gif")).getImage();                
+        img_konechry = new ImageIcon(getClass().getResource("/grafika/konechry.jpg")).getImage();                
+        img_lod = new ImageIcon(getClass().getResource("/grafika/lod.gif")).getImage();
+        img_napislode = new ImageIcon(getClass().getResource("/grafika/napislode.jpg")).getImage();
+        img_novahra = new ImageIcon(getClass().getResource("/grafika/novahra.jpg")).getImage();
+        img_prohraljsi = new ImageIcon(getClass().getResource("/grafika/prohraljsi.jpg")).getImage();
+        img_zviteziljsi = new ImageIcon(getClass().getResource("/grafika/zviteziljsi.jpg")).getImage();
+        img_otaznik = new ImageIcon(getClass().getResource("/grafika/otaznik.gif")).getImage();
+
+        ImagePanel hraciplocha_pozadi = new ImagePanel(img_pozadiocean);
+        jPanel1.add(hraciplocha_pozadi);
+        jPanel1.setComponentZOrder(hraciplocha_pozadi, 5);
+
+        hraciplocha_pozadi.setLocation(jPanel1.getWidth()/2-img_pozadiocean.getWidth(null)/2+1, jLabel1.getHeight()+jLabel1.getY()*2+5);
+        hraciplocha_pozadi.setSize(img_pozadiocean.getWidth(null), img_pozadiocean.getHeight(null));
+        
+
+        Mrizka mrizka = new Mrizka();
+        jPanel1.add(mrizka);
+        jPanel1.setComponentZOrder(mrizka, 4);
+
+        mrizka.setLocation(hraciplocha_pozadi.getX()+5, hraciplocha_pozadi.getY()+5);
+        mrizka.setSize(hraciplocha_pozadi.getWidth()-10, hraciplocha_pozadi.getHeight()-10);
+        mrizka.setForeground(new Color(200,200,200));
+
+        hra_clovek = new Hra(99);
+
+        JBHraciPole jbHraciPole_clovek = new JBHraciPole(hra_clovek, img_lod, img_otaznik, img_dira);
+        jPanel1.add(jbHraciPole_clovek);
+        jPanel1.setComponentZOrder(jbHraciPole_clovek, 3);
+
+        jbHraciPole_clovek.setLocation(mrizka.getX()+5, mrizka.getY()+5);
+        jbHraciPole_clovek.setSize(mrizka.getWidth(), mrizka.getHeight());
+        
+
+
+        
+
+
     }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -26,10 +80,13 @@ public class hlavniokno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        jButton_novahra = new javax.swing.JButton();
+        jButton_konechry = new javax.swing.JButton();
+        jButton_nejcas = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton_nahrathru = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rychlo lodě");
@@ -37,48 +94,142 @@ public class hlavniokno extends javax.swing.JFrame {
         setForeground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/grafika/novahra.jpg"))); // NOI18N
-        jButton1.setToolTipText("Nová hra");
-        jButton1.setFocusPainted(false);
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setPreferredSize(new java.awt.Dimension(311, 541));
 
-        jButton2.setText("Nejlepší čas");
-        jButton2.setFocusPainted(false);
+        jButton_novahra.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_novahra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/grafika/novahra.jpg"))); // NOI18N
+        jButton_novahra.setToolTipText("Nová hra");
+        jButton_novahra.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(20, 20, 20), 1, true));
+        jButton_novahra.setDoubleBuffered(true);
+        jButton_novahra.setFocusPainted(false);
+        jButton_novahra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                zmenaOkraje(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                zmenaOkrajeZpet(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/grafika/konechry.jpg"))); // NOI18N
-        jButton3.setToolTipText("Konec Hry");
-        jButton3.setFocusPainted(false);
+        jButton_konechry.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_konechry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/grafika/konechry.jpg"))); // NOI18N
+        jButton_konechry.setToolTipText("Konec Hry");
+        jButton_konechry.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(20, 20, 20), 1, true));
+        jButton_konechry.setDoubleBuffered(true);
+        jButton_konechry.setFocusPainted(false);
+        jButton_konechry.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                zmenaOkraje(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                zmenaOkrajeZpet(evt);
+            }
+        });
+
+        jButton_nejcas.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_nejcas.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_nejcas.setText("Nejlepší čas");
+        jButton_nejcas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(20, 20, 20), 1, true));
+        jButton_nejcas.setFocusPainted(false);
+        jButton_nejcas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                zmenaOkraje(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                zmenaOkrajeZpet(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/grafika/napislode.jpg"))); // NOI18N
+        jLabel1.setDoubleBuffered(true);
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getSize()-1f));
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("2009 © Matěj Šimek [ Enzy ] matej.simek@gmail.com");
+
+        jButton_nahrathru.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_nahrathru.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_nahrathru.setText("Nahrát hru");
+        jButton_nahrathru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(20, 20, 20)));
+        jButton_nahrathru.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                zmenaOkraje(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                zmenaOkrajeZpet(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton_konechry, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton_nejcas, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton_nahrathru, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(jButton_novahra, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(330, 330, 330)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton_nejcas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_nahrathru, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_novahra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_konechry)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void zmenaOkraje(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zmenaOkraje
+        javax.swing.JButton tlacitko = new javax.swing.JButton();
+
+        tlacitko = (javax.swing.JButton)evt.getSource();
+
+        tlacitko.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+    }//GEN-LAST:event_zmenaOkraje
+
+    private void zmenaOkrajeZpet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zmenaOkrajeZpet
+        javax.swing.JButton tlacitko = new javax.swing.JButton();
+
+        tlacitko = (javax.swing.JButton)evt.getSource();
+
+        tlacitko.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(20, 20, 20), 1, true));
+    }//GEN-LAST:event_zmenaOkrajeZpet
 
     /**
     * @param args the command line arguments
@@ -90,12 +241,110 @@ public class hlavniokno extends javax.swing.JFrame {
             }
         });
     }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton jButton_konechry;
+    private javax.swing.JButton jButton_nahrathru;
+    private javax.swing.JButton jButton_nejcas;
+    private javax.swing.JButton jButton_novahra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
 }
+
+class ImagePanel extends JPanel
+{
+	Image image;
+
+    public ImagePanel(Image image_){
+        image = new ImageIcon(image_).getImage();
+	}
+
+	@Override
+	public void paintComponent(Graphics g)
+	{
+        for (int i = 0; i < this.getHeight()+1; i+=image.getHeight(null)) {
+            for (int j = 0; j < this.getWidth()+1; j+=image.getWidth(null)) {
+                g.drawImage(image,j,i,null);
+            }
+        }
+	}
+}
+
+class Mrizka extends JPanel{
+
+    @Override
+    public void paintComponent(Graphics g){
+        int sirka, vyska;
+        sirka = (int)Math.round((double)this.getWidth()/7);
+        vyska = (int)Math.round((double)this.getHeight()/7);
+
+        for (int i = sirka; i < this.getWidth()-sirka+2; i+=sirka) {
+            g.drawLine(i, 0, i, this.getHeight());
+        }
+        for (int i = vyska; i < this.getHeight()-vyska+2; i+=vyska) {
+            g.drawLine(0, i, this.getWidth(), i);
+        }
+    }
+}
+
+class JBHraciPole extends JButton{
+
+    Hra hra;
+    Image lod, otaznik, dira;
+
+    public JBHraciPole (Hra hra_, Image lod_, Image otaznik_, Image dira_){
+        hra = hra_;
+        lod = lod_;
+        otaznik = otaznik_;
+        dira = dira_;
+
+        setBorderPainted(false);
+        setContentAreaFilled(false);
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+        int sirka, vyska;
+        sirka = (int)Math.round((double)this.getWidth()/7);
+        vyska = (int)Math.round((double)this.getHeight()/7);
+
+        int k2 = 0;
+
+        for (int i = 0; i < this.getHeight()-vyska+2; i+=vyska) {
+            for (int j = 0; j < this.getWidth()-sirka+2; j+=sirka) {
+                switch(hra.StavPolicka(k2)){
+                    case 0:
+                        g.drawImage(otaznik, j, i, null);
+                        break;
+                    case 1:
+                        g.drawImage(lod, j, i, null);
+                        break;
+                    case 2:
+                        g.drawImage(dira, j, i, null);
+                        break;
+                    case 3:
+                        break;
+                }
+
+                k2++;
+
+            }            
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
