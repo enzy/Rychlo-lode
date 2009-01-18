@@ -22,6 +22,13 @@ public class Hra {
         }
     }
 
+    void Strelba(int index_policka){
+        Boolean zasah;
+        zasah = Pole.Strelba(index_policka);
+
+        // ......... obshluha strelby
+    }
+
     byte StavPolicka(int index){
         return Pole.StavPolicka(index);
     }
