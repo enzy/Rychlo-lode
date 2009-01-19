@@ -185,11 +185,41 @@ public class Hra implements Serializable{
         return povedlose;
     }
 
-    /**
-     *
-     * Neimplementovano zatim
-            void UlozeniHry(){}
-            void NacteniHry(){}
-    */
+    void UlozeniHry(DataOutputStream dos) throws IOException{
+
+        /**
+         *  int typ_hry;
+            int pocet_lodi = 10;
+            int pocet_strel = 0;
+            Boolean probiha = true;
+            Boolean stinova = false;
+         */
+        dos.writeInt(typ_hry);
+        dos.writeInt(pocet_lodi);
+        dos.writeInt(pocet_strel);
+        dos.writeBoolean(probiha);
+        dos.writeBoolean(stinova);
+
+        for (int i = 0; i < Pole.obsah.length; i++) {
+            dos.writeByte(Pole.obsah[i].VypisObsah());
+        }                
+    }
+    void NacteniHry(DataInputStream dis) throws IOException{
+
+        typ_hry = dis.readInt();
+        pocet_lodi = dis.readInt();
+        pocet_strel = dis.readInt();
+        probiha = dis.readBoolean();
+        stinova = dis.readBoolean();
+
+        for (int i = 0; i < Pole.obsah.length; i++) {
+            Pole.obsah[i].stav = dis.readByte();
+        }
+
+        // .... vyresit urceni stinoveho pole !
+        // ... hm, to ale nemusim, kdyz si samotnou Hru vytvorim jeste jednou.....
+
+    }
+   
     
 }

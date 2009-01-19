@@ -4,6 +4,7 @@ package semestralniprace1_lode;
 import java.awt.*;
 import javax.swing.*;
 import java.applet.*;
+import java.io.*;
 
 public class hlavniokno extends javax.swing.JFrame {
     /**
@@ -202,9 +203,8 @@ public class hlavniokno extends javax.swing.JFrame {
         jButton_nahrathru.setBackground(new java.awt.Color(0, 0, 0));
         jButton_nahrathru.setForeground(new java.awt.Color(255, 255, 255));
         jButton_nahrathru.setText("Nahrát hru");
-        jButton_nahrathru.setToolTipText("Tato vlastnost není dosud implementována");
+        jButton_nahrathru.setToolTipText("");
         jButton_nahrathru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(20, 20, 20)));
-        jButton_nahrathru.setEnabled(false);
         jButton_nahrathru.setFocusable(false);
         jButton_nahrathru.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -351,7 +351,104 @@ public class hlavniokno extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_novahra_klik
 
     private void jButton_nahranihry(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_nahranihry
-        // jeste nic
+        
+        String userDir = System.getProperty("user.dir");
+        String fileSeparator = System.getProperty("file.separator");
+        String celaCesta = userDir + fileSeparator + "savegame.bin";
+        System.out.println(celaCesta);
+
+        File soubor = new File(celaCesta);
+
+        // rozpoznani stavu hry podle priznaku Star tlacitka - je to humus
+
+        if(jButton_novahra.isEnabled()){
+            // Nacitani hry, hra totiz neprobiha
+
+      // spusteni nove hry
+            jButton_novahra.setEnabled(false);
+            // tlacitko.setVisible(false);
+            jButton_nejcas.setEnabled(false);
+            jButton_nahrathru.setText("Uložit hru");
+
+            System.out.println("Cisteni...");
+
+            if (prvni_spusteni){
+                jPanel1.remove(hracipole_demo);
+                prvni_spusteni = false;
+            }
+            else {
+                jPanel1.remove(hracipole_pocitac);
+                hra_pocitac = null;
+                hra_pocitac_stinova = null;
+                hracipole_pocitac = null;
+            }
+
+            System.out.println("Zacinam novou hru...");
+
+            jButton_nejcas.setText("Počet tahů: 0");
+
+            hra_pocitac = new Hra(1);
+
+            System.out.println("Napoveda: "); hra_pocitac.Vypis();
+
+            hra_pocitac_stinova = new Hra(hra_pocitac);
+
+            hracipole_pocitac = new JBHraciPole(hra_pocitac_stinova, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
+            jPanel1.add(hracipole_pocitac);
+            jPanel1.setComponentZOrder(hracipole_pocitac, 3);
+
+            hracipole_pocitac.setLocation(mrizka.getX()+5, mrizka.getY()+5);
+
+       // nahrani her
+
+            try {
+                if (soubor.exists()) {
+                    DataInputStream dis = new DataInputStream(new FileInputStream(soubor));
+
+                    hra_pocitac.NacteniHry(dis);
+                    hra_pocitac_stinova.NacteniHry(dis);
+
+                    dis.close();
+
+                    NastavStatus("Hra načtena");
+                }
+                else{
+                    NastavStatus("Uložená hra neexistuje");
+                }
+
+            }
+            catch (IOException ex) {
+                System.out.println("Ups, tak jsme nic neprecetli ani nezapsali, hold mame spatne konstelace hvezd, zkusme to za nejaky cas...");
+        }
+
+        }
+        else {
+            // Ukladani hry, hra probiha
+
+        try {            
+
+            if (!soubor.exists()) {
+                soubor.createNewFile();
+            }
+            
+            DataOutputStream dos = new DataOutputStream(new FileOutputStream(soubor));
+            
+            hra_pocitac.UlozeniHry(dos);
+            hra_pocitac_stinova.UlozeniHry(dos);
+
+            dos.close();
+
+            NastavStatus("Hra uložena");
+
+        }
+        catch (IOException ex) {
+                System.out.println("Ups, tak jsme nic neprecetli ani nezapsali, hold mame spatne konstelace hvezd, zkusme to za nejaky cas...");
+        }        
+
+        // return povedlose;
+
+        }
+ 
     }//GEN-LAST:event_jButton_nahranihry
 
     /**
