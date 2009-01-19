@@ -5,7 +5,10 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-
+/**
+ *
+ * Trida pro zobrazeni hraciho pole
+ */
 public class JBHraciPole extends JButton{
 
     Hra hra;
@@ -26,9 +29,11 @@ public class JBHraciPole extends JButton{
         sirka = sirka_policka * 7;
         vyska = vyska_policka * 7;
 
+        // vylouceni nechtenych efektu
         setBorderPainted(false);
         setContentAreaFilled(false);
 
+        // obsluha kliknuti
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -36,7 +41,10 @@ public class JBHraciPole extends JButton{
             }
         });
     }
-
+    /**
+     *
+     * Obsluha kliknuti
+     */
     public void mysKlik(MouseEvent e){
         if(e.getButton() != MouseEvent.BUTTON1) return;
 
@@ -49,6 +57,7 @@ public class JBHraciPole extends JButton{
 
         index_policka = (py/vyska_policka)*7 + (px/sirka_policka);
 
+        // a staci jen vystrelit
         hra.Strelba(index_policka);
 
         // debug //  System.out.println("Klik na x:" + px + ", y:" + py);
@@ -56,17 +65,17 @@ public class JBHraciPole extends JButton{
         // debug // System.out.println(sirka_policka + " " + vyska_policka + " " + sirka + " " + vyska);
 
     }
-
+    /**
+     *
+     * Prepsana metoda pro zobrazeni prvku pro vykresleni hraci plochy
+     */
     @Override
-    public void paintComponent(Graphics g){
-        int sirka, vyska;
-        sirka = (int)Math.round((double)this.getWidth()/7);
-        vyska = (int)Math.round((double)this.getHeight()/7);
+    public void paintComponent(Graphics g){        
 
         int k2 = 0;
 
-        for (int i = 0; i < this.getHeight()-vyska+2; i+=vyska) {
-            for (int j = 0; j < this.getWidth()-sirka+2; j+=sirka) {
+        for (int i = 0; i < this.getHeight()-vyska_policka+2; i+=vyska_policka) {
+            for (int j = 0; j < this.getWidth()-sirka_policka+2; j+=sirka_policka) {
                 switch(hra.StavPolicka(k2)){
                     case 0:
                         g.drawImage(otaznik, j, i, null);

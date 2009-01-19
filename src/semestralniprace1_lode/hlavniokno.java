@@ -9,45 +9,74 @@ public class hlavniokno extends javax.swing.JFrame {
     /**
      * Image objekty obrazku, se kterymi pracuje okno
      */
-    Image img_dira, img_hratspc, img_hratskamosem, img_konechry, img_lod,
+    public static Image img_dira, img_hratspc, img_hratskamosem, img_konechry, img_lod,
           img_napislode, img_novahra, img_pozadiocean, img_prohraljsi,
           img_zviteziljsi, img_otaznik;
-    AudioClip zvuk_pozadi;
+    /**
+     * Hudba na pozadi
+     */
+    static public AudioClip zvuk_pozadi;
+    /**
+     * Nejlepsi vysledky
+     */
+    static public String highscore = "Nej hra";
+    /**
+     * Boolean informujici o prvnim spusteni metodu pro vytvoreni nove hry
+     */
+    static public Boolean prvni_spusteni = true;
     /**
      * Demo hra pri spusteni programu
      */
     Hra hra_demo;
-
+    /**
+     * Hra proti pocitaci
+     */
     Hra hra_pocitac, hra_clovek;
     Hra hra_pocitac_stinova, hra_clovek_stinova;
-
+    /**
+     * Zobrazovac hraciho pole
+     */
     JBHraciPole hracipole_demo;
 
     JBHraciPole hracipole_pocitac, hracipole_clovek;
-
+    /**
+     * zobrazovac mrizky
+     */
     Mrizka mrizka;
+    /**
+     * zobrazovac pozadi
+     */
     ImagePanel hraciplocha_pozadi;
 
     /** Creates new form hlavniokno */
     public hlavniokno() {
         initComponents();
 
-        // nacteni obrazku se souboru
-        img_pozadiocean = new ImageIcon(getClass().getResource("/grafika/pozadi-ocean.jpg")).getImage();
-        img_dira = new ImageIcon(getClass().getResource("/grafika/dira.gif")).getImage();                
-        img_hratspc = new ImageIcon(getClass().getResource("/grafika/hrat s PC.gif")).getImage();                
-        img_hratskamosem = new ImageIcon(getClass().getResource("/grafika/hrat s kamosem.gif")).getImage();                
-        img_konechry = new ImageIcon(getClass().getResource("/grafika/konechry.jpg")).getImage();                
-        img_lod = new ImageIcon(getClass().getResource("/grafika/lod.gif")).getImage();
-        img_napislode = new ImageIcon(getClass().getResource("/grafika/napislode.jpg")).getImage();
-        img_novahra = new ImageIcon(getClass().getResource("/grafika/novahra.jpg")).getImage();
-        img_prohraljsi = new ImageIcon(getClass().getResource("/grafika/prohraljsi.jpg")).getImage();
-        img_zviteziljsi = new ImageIcon(getClass().getResource("/grafika/zviteziljsi.jpg")).getImage();
-        img_otaznik = new ImageIcon(getClass().getResource("/grafika/otaznik.gif")).getImage();
+        jButton_nejcas.setText(highscore);
+
+        // nacteni obrazku ze souboru
+        if (img_pozadiocean == null){
+            System.out.println("Nacitam grafiku...");
+
+            img_pozadiocean = new ImageIcon(getClass().getResource("/grafika/pozadi-ocean.jpg")).getImage();
+            img_dira = new ImageIcon(getClass().getResource("/grafika/dira.gif")).getImage();
+            img_hratspc = new ImageIcon(getClass().getResource("/grafika/hrat s PC.gif")).getImage();
+            img_hratskamosem = new ImageIcon(getClass().getResource("/grafika/hrat s kamosem.gif")).getImage();
+            img_konechry = new ImageIcon(getClass().getResource("/grafika/konechry.jpg")).getImage();
+            img_lod = new ImageIcon(getClass().getResource("/grafika/lod.gif")).getImage();
+            img_napislode = new ImageIcon(getClass().getResource("/grafika/napislode.jpg")).getImage();
+            img_novahra = new ImageIcon(getClass().getResource("/grafika/novahra.jpg")).getImage();
+            img_prohraljsi = new ImageIcon(getClass().getResource("/grafika/prohraljsi.jpg")).getImage();
+            img_zviteziljsi = new ImageIcon(getClass().getResource("/grafika/zviteziljsi.jpg")).getImage();
+            img_otaznik = new ImageIcon(getClass().getResource("/grafika/otaznik.gif")).getImage();
+        }
 
         // nacteni a spusteni zvuku na pozadi
-        zvuk_pozadi = Applet.newAudioClip(getClass().getResource("/zvuk/sea.wav"));
-        zvuk_pozadi.loop();
+        if (zvuk_pozadi==null){
+            System.out.println("Nahravam hudbu na pozadi...");
+            zvuk_pozadi = Applet.newAudioClip(getClass().getResource("/zvuk/sea.wav"));
+            zvuk_pozadi.loop();
+        }
 
         // pozadi hraci plochy
         hraciplocha_pozadi = new ImagePanel(img_pozadiocean);
@@ -144,8 +173,10 @@ public class hlavniokno extends javax.swing.JFrame {
 
         jButton_nejcas.setBackground(new java.awt.Color(0, 0, 0));
         jButton_nejcas.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_nejcas.setText("Nejlepší čas");
+        jButton_nejcas.setText("Nejlepší hra");
+        jButton_nejcas.setToolTipText("Nejlepší hra a počet tvých tahů");
         jButton_nejcas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(20, 20, 20), 1, true));
+        jButton_nejcas.setEnabled(false);
         jButton_nejcas.setFocusPainted(false);
         jButton_nejcas.setFocusable(false);
         jButton_nejcas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -171,9 +202,14 @@ public class hlavniokno extends javax.swing.JFrame {
         jButton_nahrathru.setBackground(new java.awt.Color(0, 0, 0));
         jButton_nahrathru.setForeground(new java.awt.Color(255, 255, 255));
         jButton_nahrathru.setText("Nahrát hru");
+        jButton_nahrathru.setToolTipText("Tato vlastnost není dosud implementována");
         jButton_nahrathru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(20, 20, 20)));
+        jButton_nahrathru.setEnabled(false);
         jButton_nahrathru.setFocusable(false);
         jButton_nahrathru.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_nahranihry(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 zmenaOkraje(evt);
             }
@@ -264,39 +300,59 @@ public class hlavniokno extends javax.swing.JFrame {
      * Obsluha udalosti stisknuti tlacitka Konec hry
      */
     private void jButton_konechry_klik(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_konechry_klik
+        System.out.println("\nNashledanou :)\n");
         System.exit(0);
     }//GEN-LAST:event_jButton_konechry_klik
-
+    /**
+     *
+     * Metoda obluhujici klik na start tlacitko, spusteni a vykresleni hry
+     */
     private void jButton_novahra_klik(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_novahra_klik
-        /**
-         *
-         *
-        // vykreslovaci a odchytavaci cast hraci plochy, jako tlacitko
-        JBHraciPole hracipole_demo = new JBHraciPole(hra_demo, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
-        jPanel1.add(hracipole_demo);
-        jPanel1.setComponentZOrder(hracipole_demo, 3);
-
-        hracipole_demo.setLocation(mrizka.getX()+5, mrizka.getY()+5);
-         *
-         */
-
-        hra_pocitac = new Hra(1);
-        hra_pocitac.Vypis();
-        hra_pocitac_stinova = new Hra(hra_pocitac);
-
-        if (hracipole_demo.isValid()) jPanel1.remove(hracipole_demo);
-
-        hracipole_pocitac = new JBHraciPole(hra_pocitac_stinova, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
-        jPanel1.add(hracipole_pocitac);
-        jPanel1.setComponentZOrder(hracipole_pocitac, 3);
-
-        hracipole_pocitac.setLocation(mrizka.getX()+5, mrizka.getY()+5);
-
+                
         JButton tlacitko = (JButton)evt.getSource();
+        
+        if (tlacitko.isEnabled()==false) return;
+        else {
+            tlacitko.setEnabled(false);
+            // tlacitko.setVisible(false);
+            jButton_nejcas.setEnabled(false);
+            jButton_nahrathru.setText("Uložit hru");
 
-        tlacitko.setEnabled(false);
+            System.out.println("Cisteni...");
+
+            if (prvni_spusteni){
+                jPanel1.remove(hracipole_demo);
+                prvni_spusteni = false;
+            }
+            else {
+                jPanel1.remove(hracipole_pocitac);
+                hra_pocitac = null;
+                hra_pocitac_stinova = null;
+                hracipole_pocitac = null;
+            }            
+
+            System.out.println("Zacinam novou hru...");
+
+            jButton_nejcas.setText("Počet tahů: 0");
+
+            hra_pocitac = new Hra(1);
+
+            System.out.println("Napoveda: "); hra_pocitac.Vypis();
+
+            hra_pocitac_stinova = new Hra(hra_pocitac);            
+
+            hracipole_pocitac = new JBHraciPole(hra_pocitac_stinova, mrizka.getWidth(), mrizka.getHeight(), img_lod, img_otaznik, img_dira);
+            jPanel1.add(hracipole_pocitac);
+            jPanel1.setComponentZOrder(hracipole_pocitac, 3);
+
+            hracipole_pocitac.setLocation(mrizka.getX()+5, mrizka.getY()+5);
+        }
 
     }//GEN-LAST:event_jButton_novahra_klik
+
+    private void jButton_nahranihry(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_nahranihry
+        // jeste nic
+    }//GEN-LAST:event_jButton_nahranihry
 
     /**
     * @param args the command line arguments
@@ -308,15 +364,31 @@ public class hlavniokno extends javax.swing.JFrame {
             }
         });
     }
+    public static void NastavStatus(String s){
+        jLabel_pruvodce.setText(s);
+    }
+    public static void NastavNejTlacitko(String s){
+        NastavHighscore(s);
+        jButton_nejcas.setText(highscore);
+    }
+    public static void NastavHighscore(String h){
+        highscore = h;
+    }
+    public static void NastavStart(Boolean b){
+        jButton_novahra.setEnabled(b);
+    }
+    public static void NastavNahratHru(Boolean b){
+        if (b) jButton_nahrathru.setText("Nahrát hru");
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_konechry;
-    private javax.swing.JButton jButton_nahrathru;
-    private javax.swing.JButton jButton_nejcas;
-    private javax.swing.JButton jButton_novahra;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel_pruvodce;
+    private static javax.swing.JButton jButton_konechry;
+    private static javax.swing.JButton jButton_nahrathru;
+    private static javax.swing.JButton jButton_nejcas;
+    private static javax.swing.JButton jButton_novahra;
+    private static javax.swing.JLabel jLabel1;
+    private static javax.swing.JLabel jLabel2;
+    private static javax.swing.JLabel jLabel_pruvodce;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 

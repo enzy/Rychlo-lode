@@ -1,7 +1,13 @@
 
 package semestralniprace1_lode;
 
-public class HraciPole {
+import java.io.Serializable;
+
+/**
+ *
+ * Trida pro herni plan
+ */
+public class HraciPole implements Serializable {
     int sirka, vyska;
     int pocet_lodi;
 
@@ -56,6 +62,8 @@ public class HraciPole {
             }
         }
         else { // nahodne umisteni lodi, prevence opakovani
+        while(!KontrolaPoctuLodi())
+        {
             int[] nahodne_pozice = new int[pocet_lodi];
 
             for (int i = 0; i < pocet_lodi; i++) {
@@ -69,7 +77,19 @@ public class HraciPole {
                 obsah[nahodne_pozice[i]].NastavObsazene();
             }
         }
+        }
 
+    }
+    private Boolean KontrolaPoctuLodi() {
+        Boolean vporadku = false;
+        int _pocetlodi = 0;
+
+            for (int i = 0; i < obsah.length; i++) {
+                if (obsah[i].VypisObsah()==1) _pocetlodi++;
+            }
+        if (_pocetlodi==pocet_lodi) vporadku=true;
+
+        return vporadku;
     }
 
 

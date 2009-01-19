@@ -4,6 +4,10 @@ package semestralniprace1_lode;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ *
+ * Trida pro vytvoreni kompomenty, ktera vykresluje zadany obrazek na pozadi opakovane
+ */
 public class ImagePanel extends JPanel
 {
 	Image image;

@@ -4,6 +4,10 @@ package semestralniprace1_lode;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * 
+ * Trida pro vytvoreni komponenu vykreslujiciho mrizku
+ */
 public class Mrizka extends JPanel{
 
     @Override

@@ -1,7 +1,13 @@
 
 package semestralniprace1_lode;
 
-public class Policko{
+import java.io.Serializable;
+
+/**
+ *
+ * Trida pro obsah jednotlivych policek
+ */
+public class Policko implements Serializable{
 
     byte stav = 0;    // 0 - prazdne=neobjevene, 1 - obsazene, 2 - potopene, 3 - voda/vyzkousene
 
