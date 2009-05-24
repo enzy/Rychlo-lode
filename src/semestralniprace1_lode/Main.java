@@ -6,10 +6,8 @@
  *                      #######################
  *                      #  SEMESTRALNI PRACE  #
  *                      #######################
- * 
- * termin odevzdani: 31.1.2009
- * vybrane tema: hra Lode
- * pozadavky: oop, prace se souborem
+ *  
+ * vybrane tema: hra Lode  
  * 
  *  VIZ.: DOKUMENTACE : dokumentace.pdf
  */

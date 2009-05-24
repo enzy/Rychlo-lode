@@ -3,6 +3,7 @@ package semestralniprace1_lode;
 
 import java.applet.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Hra implements Serializable{
     static public AudioClip zvuk_splouchnuti;
     static public AudioClip zvuk_potlesk;
     static public AudioClip zvuk_pohreb;
+
+	 static public Top20 top20;
 
     public Hra(){
 
@@ -133,6 +136,15 @@ public class Hra implements Serializable{
      * Ukladani highscore do souboru
      */
     Boolean UlozeniHighScore(){
+		 // Ulozeni na server
+		 top20 = new Top20();
+		 if (top20.getMax() > pocet_strel){
+			 String jmeno = (String)JOptionPane.showInputDialog(hlavniokno.getFrames()[0], "Dosáhl jsi na žebříček 20 nejlepších, kdo hráli tuto hru!\nZadej prosím své jméno:","WOW! Jsi jednička!",JOptionPane.WARNING_MESSAGE);
+			 if(jmeno==null) jmeno = "Stydlínek";
+			 top20.putScore(jmeno, pocet_strel);
+		 }
+
+		 // Ulozeni lokalniho nejlepsiho vysledku
         Boolean povedlose = false;
         int starescore = Integer.MAX_VALUE;
 
