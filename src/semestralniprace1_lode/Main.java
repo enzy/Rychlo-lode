@@ -1,14 +1,23 @@
 /**
  *
- * @author Matej Simek, 3.11.2008
+ * @author Matej Simek, 3.11.2008 - 25.5.2009
  *         CVUT FEL, matej.simek@gmail.com
  * 
  *                      #######################
  *                      #  SEMESTRALNI PRACE  #
  *                      #######################
- *  
- * vybrane tema: hra Lode  
- * 
+ *
+ *
+ *      ______              __     __          __           __
+ *     |   __ \.--.--.----.|  |--.|  |.-----. |  |.-----.--|  |.-----.
+ *     |      <|  |  |  __||     ||  ||  _  | |  ||  _  |  _  ||  -__|
+ *     |___|__||___  |____||__|__||__||_____| |__||_____|_____||_____|
+ *             |_____|
+ *
+ *
+ *
+ *
+ *  SVN: http://code.google.com/p/matejsimek-alg1-semestralniprace/
  *  VIZ.: DOKUMENTACE : dokumentace.pdf
  */
 

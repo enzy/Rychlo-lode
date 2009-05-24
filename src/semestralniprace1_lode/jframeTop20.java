@@ -2,7 +2,7 @@
 package semestralniprace1_lode;
 
 /**
- *
+ * JFrame pro zobrazeni TOP 20 Highscore z databaze
  * @author Enzy
  */
 public class jframeTop20 extends javax.swing.JFrame {
