@@ -169,14 +169,14 @@ public class Top20 {
 		 */
 
 		// zjisteni delky jmen + delky nejdelsiho jmena pro nasledny vypocet mezer
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < pole.length/3; i++) {
 			delkyjmen[i] = pole[i][1].length();
 			if (delkyjmen[i] > nejdelsijmeno) nejdelsijmeno = delkyjmen[i];
 		}
 		if (nejdelsijmeno>31) nejdelsijmeno = 31;
 
 		// sestaveni formatovaneho retezce
-		for (int i = 0; i < 20; i++) {			
+		for (int i = 0; i < pole.length/3; i++) {
 
 			vystup += pole[i][0];									// poradi
 			for (int j = 0; j < 3; j++) vystup += mezera;	// za kazdym poradim nejmene 3 mezery
