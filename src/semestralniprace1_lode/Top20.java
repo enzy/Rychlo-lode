@@ -136,6 +136,13 @@ public class Top20 {
 	 */
 	public String[][] getVsechnyRadky(){
 		String[][] vysledek = new String[20][3];
+
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 3; j++) {
+				vysledek[i][j] = new String("");
+			}
+		}
+
 		for (int i = 0; i < 20; i++) {
 			if(this.getRadek(i+1)!=null) {
 				vysledek[i] = this.getRadek(i+1);
@@ -160,6 +167,8 @@ public class Top20 {
 		String bf = ""; // "<b>";								// zvyrazneni zacatek
 		String bl = ""; // </b>";								// zvyrazneni konec
 
+		if(pole==null) return "... prazdno ...";
+
 		/*
 		 * 1. mezera
 		 *		4 mezery pokud je radek do 9 vcetne, 3 mezery nad 10
@@ -170,7 +179,7 @@ public class Top20 {
 
 		// zjisteni delky jmen + delky nejdelsiho jmena pro nasledny vypocet mezer
 		for (int i = 0; i < pole.length/3; i++) {
-			delkyjmen[i] = pole[i][1].length();
+			delkyjmen[i] = new Integer(pole[i][1].length());
 			if (delkyjmen[i] > nejdelsijmeno) nejdelsijmeno = delkyjmen[i];
 		}
 		if (nejdelsijmeno>31) nejdelsijmeno = 31;
